@@ -1,25 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+
+
+import React, { useState } from 'react';
+import SplitScreen from './components/SplitScreen';
+import JsonEditor from './components/JsonEditor';
+import FormGenerator from './components/FormGenerator';
+import { FormSchema } from './types';
+
+const defaultSchema: FormSchema = {
+  formTitle: 'Sample Form',
+  fields: [],
+};
 
 function App() {
+  const [schema, setSchema] = useState<FormSchema>(defaultSchema);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <SplitScreen
+      left={
+        <JsonEditor schema={schema} onChange={(json) => setSchema(json as FormSchema)} />
+      }
+      right={<FormGenerator schema={schema} />}
+    />
   );
 }
 
